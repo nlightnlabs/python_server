@@ -1,0 +1,21 @@
+Algorithm/Approach	Description
+
+Linear Regression	A statistical method used to model the relationship between a dependent variable and one or more independent variables by fitting a linear equation to the data.
+
+Logistic Regression	Similar to linear regression but used for binary classification problems, where the output is a categorical variable with two classes.
+
+Decision Trees	A tree-like model where decisions are made based on the features of the data, often used for classification and regression tasks.
+
+Random Forest	An ensemble learning method that builds multiple decision trees and combines their predictions to improve accuracy and reduce overfitting.
+
+Support Vector Machines	A supervised learning algorithm used for classification and regression tasks, particularly effective in high-dimensional spaces and with complex datasets.
+
+k-Nearest Neighbors	A simple, instance-based learning algorithm used for classification and regression, where new data points are classified based on the majority class of their neighbors.
+
+Clustering (e.g., K-means)	Unsupervised learning technique used to group similar data points together into clusters, often used for customer segmentation and pattern recognition.
+
+Principal Component Analysis (PCA)	Dimensionality reduction technique that transforms high-dimensional data into a lower-dimensional space while preserving as much variance as possible.
+
+Neural Networks	Deep learning models inspired by the structure of the human brain, used for complex pattern recognition tasks, such as image and speech recognition.
+
+Natural Language Processing (NLP)	Techniques for analyzing and processing human language data, used for sentiment analysis, text classification, and language translation, among others.
