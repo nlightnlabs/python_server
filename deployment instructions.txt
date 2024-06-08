@@ -1,0 +1,8 @@
+-- In development add packages to requirements.txt
+pip freeze > requirements.txt
+
+-- in production server enter:
+sudo apt install python3-venv
+python3 -m venv env
+pip install -r requirements.txt
+

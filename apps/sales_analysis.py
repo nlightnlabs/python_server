@@ -6,7 +6,7 @@ import json
 def main():
 
     arugments = {
-        "table": "inventory_items",
+        "table": "opportunities",
         "dbName": "bes"
     }
     data = getData(json.dumps(arugments))

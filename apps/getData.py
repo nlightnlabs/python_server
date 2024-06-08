@@ -4,6 +4,7 @@ import json
 from datetime import datetime, date, time
 import decimal
 
+
 def serialize_datetime(obj):
     if isinstance(obj, (datetime, date, time)):
         return obj.isoformat()
@@ -11,7 +12,13 @@ def serialize_datetime(obj):
         return float(obj)
     raise TypeError(f"Type {type(obj)} not serializable")
 
-def getData(table, dbName="main"):
+
+def getData(arguments):
+    
+    params = json.loads(arguments)
+    table = params.get("table", "default_table")
+    dbName = params.get("dbName", "main")
+
     username = "dbadmin"
     password = "Dbadmin03"
     database = dbName
@@ -30,6 +37,5 @@ def getData(table, dbName="main"):
         return serialized_results
 
     except (Exception, psycopg2.Error) as error:
-        print("Error while fetching data from PostgreSQL", error)
-        exit()
+        return json.dumps({"error": str(error)})
 
