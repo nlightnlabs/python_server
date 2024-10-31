@@ -88,6 +88,10 @@ def dbQuery():
     query = data.get('query')
     dbName = lambda data: data.get('dbName') if data.get('dbName') != None else PGDATABASE
 
+    print(data)
+    print(query)
+    print(dbName)
+
     if not query:
         return jsonify({'error': 'A Query is required'}), 400
 
@@ -98,7 +102,7 @@ def dbQuery():
     try:
         # Query the user by username
         cursor.execute(query)
-        response = cursor.fetchone()
+        response = cursor.fetchall()
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -117,17 +121,22 @@ def getTable():
     dbName = lambda data: data.get('dbName') if data.get('dbName') != None else PGDATABASE
     query = f'SELECT * FROM ${tableName};'
 
+    print(data)
+    print(tableName)
+    print(dbName)
+    print(query)
+    
     if not query:
         return jsonify({'error': 'A Query is required'}), 400
 
-    # Connect to the database
-    conn = get_db_connection(dbName)
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
-
     try:
+        # Connect to the database
+        conn = get_db_connection(dbName)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+
         # Query the user by username
         cursor.execute(query)
-        response = cursor.fetchone()
+        response = cursor.fetchall()
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
