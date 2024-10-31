@@ -58,7 +58,7 @@ def home():
     return render_template('index.html')
 
 # Define a route for a simple API
-@app.route('/api/test', methods=['GET'])
+@app.route('/python/api/test', methods=['GET'])
 def get_data():
     sample_data = {
         'name': 'Flask Web Server',
