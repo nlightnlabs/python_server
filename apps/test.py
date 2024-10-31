@@ -2,7 +2,7 @@ import requests
 import json
 
 # Define the endpoint URL and your data
-url = 'https://nlightnlabs.net/python/db/dataframe'  # Adjust the port as necessary
+url = 'https://nlightnlabs.net/python/db/tableDataFrame'  # Adjust the port as necessary
 data = {
     "tableName": "staff_data",
     "dbName": "wis"  # Optional, can be omitted

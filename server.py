@@ -150,7 +150,7 @@ def getTable():
 
 
 @app.route('/python/db/queryDataFrame', methods=['POST'])
-def getDataFrame():
+def getqueryDataFrame():
     
     data = request.json
     dbName = data.get('dbName') if data.get('dbName') is not None else PGDATABASE
@@ -167,7 +167,7 @@ def getDataFrame():
 
 
 @app.route('/python/db/tableDataFrame', methods=['POST'])
-def getDataFrame():
+def getTableDataFrame():
     
     data = request.json
     tableName = data.get('tableName')
