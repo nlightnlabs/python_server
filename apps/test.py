@@ -1,10 +1,4 @@
-import json
+from flask import jsonify
 
-def main(args):
-    inputs = args
-    outputs = args
-    print(json.dumps(outputs))
-
-if __name__ == '__main__':
-    import sys
-    main(json.loads(sys.argv[1]))
+def testapp(data):
+    return f"This is a test app jsonify({data})"
