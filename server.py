@@ -121,7 +121,7 @@ def getTable():
     data = request.json
     tableName = data.get("tableName")
     dbName = data.get('dbName') if data.get('dbName') is not None else PGDATABASE
-    query = f'SELECT * FROM ${tableName};'
+    query = f'SELECT * FROM {tableName};'
 
     print(data)
     print(tableName)
