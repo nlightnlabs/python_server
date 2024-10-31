@@ -181,8 +181,11 @@ def getTableDataFrame():
   
     engine = create_engine(f'postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{dbName}')
     df = pd.read_sql(query, engine)
+    print(df)
 
-    return df
+    # Convert DataFrame to JSON and return
+    result_json = df.to_json(orient='records')  # Convert DataFrame to JSON format
+    return jsonify(result_json)  # Return the JSON response
 
 # Allternate get table using parameter argument and "GET"
 @app.route('/python/db/getTable/<tableName>', methods=['GET'])

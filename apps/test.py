@@ -1,21 +1,30 @@
 import requests
-import json
+import pandas as pd
 
-# Define the endpoint URL and your data
-url = 'https://nlightnlabs.net/python/db/tableDataFrame'  # Adjust the port as necessary
+# Define the API endpoint URL
+url = 'http://localhost:8000/python/db/table'  # Adjust the port as necessary
+
+# Prepare the data to send in the POST request
 data = {
-    "tableName": "staff_data",
-    "dbName": "wis"  # Optional, can be omitted
+    "tableName": "users",  # Replace with your actual table name
+    "dbName": "main"     # Optional: replace with your actual database name
 }
 
 # Make the POST request to the Flask API
-response = requests.post(url, json=data)
+try:
+    response = requests.post(url, json=data)
 
-# Check if the request was successful
-if response.status_code == 200:
-    # Process the JSON response
-    result_df = response.json()
-    print("DataFrame Retrieved Successfully:")
-    print(result_df)  # or handle the DataFrame as needed
-else:
-    print(f"Error: {response.status_code} - {response.text}")
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Get the JSON response
+        result = response.json()
+        print("Data retrieved successfully:")
+        print(result)  # This will be a list of dictionaries
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+
+except requests.exceptions.RequestException as e:
+    print(f"Request failed: {e}")
+
+data = pd.DataFrame(response)
+data
