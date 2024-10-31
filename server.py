@@ -86,7 +86,7 @@ def dbQuery():
     # Get username and password from request
     data = request.json
     query = data.get('query')
-    dbName = lambda data: data.get('dbName') if data.get('dbName') != None else "main"
+    dbName = lambda data: data.get('dbName') if data.get('dbName') != None else PGDATABASE
 
     if not query:
         return jsonify({'error': 'A Query is required'}), 400
@@ -109,8 +109,49 @@ def dbQuery():
     return jsonify(response)
 
 
+@app.route('/db/table', methods=['POST'])
+def getTable():
+    # Get username and password from request
+    data = request.json
+    tableName = data.get("tableName")
+    dbName = lambda data: data.get('dbName') if data.get('dbName') != None else PGDATABASE
+    query = f'SELECT * FROM ${tableName};'
 
-@app.route('/db/getTableRecords/<tableName>', methods=['GET'])
+    if not query:
+        return jsonify({'error': 'A Query is required'}), 400
+
+    # Connect to the database
+    conn = get_db_connection(dbName)
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+    try:
+        # Query the user by username
+        cursor.execute(query)
+        response = cursor.fetchone()
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+    return jsonify(response)
+
+
+@app.route('/db/dataframe', methods=['POST'])
+def getDataFrame():
+    
+    data = request.json
+    tableName = data.get('tableName')
+    dbName = lambda data: data.get('dbName') if data.get('dbName') != None else PGDATABASE
+  
+    engine = create_engine(f'postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{dbName}')
+    df = pd.read_sql('SELECT * FROM {tableName}', engine)
+
+    return df
+
+# Allternate get table using parameter argument and "GET"
+@app.route('/db/getTable/<tableName>', methods=['GET'])
 def getTableRecords(tableName):
 
     conn = get_db_connection()
@@ -137,27 +178,6 @@ def getTableRecords(tableName):
 
     return jsonify(response)
 
-
-@app.route('/db/table', methods=['POST'])
-def getTable():
-    
-    data = request.json
-    tableName = data.get('tableName')
-    dbName = lambda data: data.get('dbName') if data.get('dbName') != None else "main"
-  
-    engine = create_engine(f'postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{PGDATABASE}')
-    df = pd.read_sql('SELECT * FROM assets', engine)
-
-    try:
-        cursor.execute(f'SELECT * FROM {tableName};') 
-        response = cursor.fetchall()
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        cursor.close()
-        conn.close()
-
-    return jsonify(response)
 
 
 @app.route('/db/updateRecord', methods=['POST'])
