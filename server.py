@@ -83,34 +83,36 @@ def get_db_connection(dbname="main"):
 # General Query
 @app.route('/python/db/query', methods=['POST'])
 def dbQuery():
-    # Get username and password from request
+    # Get the JSON data from the request
     data = request.json
-    query = data.get('query')
-    dbName = lambda data: data.get('dbName') if data.get('dbName') != None else PGDATABASE
+    query = data.get('query')  # Get the SQL query
 
-    print(data)
-    print(query)
-    print(dbName)
+    # Get the database name, default to PGDATABASE if not provided
+    dbName = data.get('dbName') if data.get('dbName') is not None else PGDATABASE
 
+    # Check if a query is provided
     if not query:
         return jsonify({'error': 'A Query is required'}), 400
 
-    # Connect to the database
-    conn = get_db_connection(dbName)
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
-
+    # Connect to the specified database
     try:
-        # Query the user by username
+        conn = get_db_connection(dbName)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+        # Execute the query
         cursor.execute(query)
-        response = cursor.fetchall()
+        response = cursor.fetchone()  # Fetch one result
+
+        return jsonify(response)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
     finally:
+        # Ensure resources are released
         cursor.close()
         conn.close()
 
-    return jsonify(response)
 
 
 @app.route('/python/db/table', methods=['POST'])
@@ -118,7 +120,7 @@ def getTable():
     # Get username and password from request
     data = request.json
     tableName = data.get("tableName")
-    dbName = lambda data: data.get('dbName') if data.get('dbName') != None else PGDATABASE
+    dbName = data.get('dbName') if data.get('dbName') is not None else PGDATABASE
     query = f'SELECT * FROM ${tableName};'
 
     print(data)
