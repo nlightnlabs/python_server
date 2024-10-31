@@ -149,15 +149,38 @@ def getTable():
     return jsonify(response)
 
 
-@app.route('/python/db/dataframe', methods=['POST'])
+@app.route('/python/db/queryDataFrame', methods=['POST'])
+def getDataFrame():
+    
+    data = request.json
+    dbName = data.get('dbName') if data.get('dbName') is not None else PGDATABASE
+    query = data.get('query')
+
+    print(data)
+    print(dbName)
+    print(query)
+  
+    engine = create_engine(f'postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{dbName}')
+    df = pd.read_sql(query, engine)
+
+    return df
+
+
+@app.route('/python/db/tableDataFrame', methods=['POST'])
 def getDataFrame():
     
     data = request.json
     tableName = data.get('tableName')
-    dbName = lambda data: data.get('dbName') if data.get('dbName') != None else PGDATABASE
+    dbName = data.get('dbName') if data.get('dbName') is not None else PGDATABASE
+    query = 'SELECT * FROM {tableName};'
+
+    print(data)
+    print(tableName)
+    print(dbName)
+    print(query)
   
     engine = create_engine(f'postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{dbName}')
-    df = pd.read_sql('SELECT * FROM {tableName}', engine)
+    df = pd.read_sql(query, engine)
 
     return df
 
