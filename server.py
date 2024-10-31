@@ -81,7 +81,7 @@ def get_db_connection(dbname="main"):
 
 
 # General Query
-@app.route('/db/query', methods=['POST'])
+@app.route('/python/db/query', methods=['POST'])
 def dbQuery():
     # Get username and password from request
     data = request.json
@@ -109,7 +109,7 @@ def dbQuery():
     return jsonify(response)
 
 
-@app.route('/db/table', methods=['POST'])
+@app.route('/python/db/table', methods=['POST'])
 def getTable():
     # Get username and password from request
     data = request.json
@@ -138,7 +138,7 @@ def getTable():
     return jsonify(response)
 
 
-@app.route('/db/dataframe', methods=['POST'])
+@app.route('/python/db/dataframe', methods=['POST'])
 def getDataFrame():
     
     data = request.json
@@ -151,7 +151,7 @@ def getDataFrame():
     return df
 
 # Allternate get table using parameter argument and "GET"
-@app.route('/db/getTable/<tableName>', methods=['GET'])
+@app.route('/python/db/getTable/<tableName>', methods=['GET'])
 def getTableRecords(tableName):
 
     conn = get_db_connection()
@@ -180,7 +180,7 @@ def getTableRecords(tableName):
 
 
 
-@app.route('/db/updateRecord', methods=['POST'])
+@app.route('/python/db/updateRecord', methods=['POST'])
 def updateRecord():
     data = request.json  # Get the data from the request body (assuming it's JSON)
 
@@ -236,7 +236,7 @@ def updateRecord():
 
 
 
-@app.route('/db/addRecord', methods=['POST'])
+@app.route('/python/db/addRecord', methods=['POST'])
 def addRecord():
     data = request.json  # Get the data from the request body (assuming it's JSON)
 
@@ -278,7 +278,7 @@ def addRecord():
     return jsonify({'message': 'Record added successfully', 'id': inserted_id})
 
 
-@app.route('/db/add', methods=['POST'])
+@app.route('/python/db/add', methods=['POST'])
 def add_record():
     data = request.json  # Get the data from the request body (assuming it's JSON)
 
@@ -329,7 +329,7 @@ def add_record():
     return jsonify({'message': 'Record added successfully', 'id': inserted_id})
 
 
-@app.route('/db/delete', methods=['POST'])
+@app.route('/python/db/delete', methods=['POST'])
 def deleteRecord():
     data = request.json  # Get the data from the request body (assuming it's JSON)
 
@@ -376,7 +376,7 @@ def deleteRecord():
 
 
 
-@app.route('/db/userRecord', methods=['POST'])
+@app.route('/python/db/userRecord', methods=['POST'])
 def get_user_record():
 
     data = request.json
@@ -397,7 +397,7 @@ def get_user_record():
     return jsonify(users)
 
 
-@app.route('/db/authenticateUser', methods=['POST'])
+@app.route('/python/db/authenticateUser', methods=['POST'])
 def authenticateUser():
     # Get username and password from request
     data = request.json
@@ -438,7 +438,7 @@ def authenticateUser():
 
 
 # Conditional Lookup
-@app.route('/db/conditionalLookup', methods=['POST'])
+@app.route('/python/db/conditionalLookup', methods=['POST'])
 def conditional_lookup():
     data = request.json
     tableName = data.get('tableName')
