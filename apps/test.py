@@ -19,7 +19,7 @@ try:
         # Get the JSON response
         result = response.json()
         print("Data retrieved successfully:")
-        print(result)  # This will be a list of dictionaries
+        print(result)  
     else:
         print(f"Error: {response.status_code} - {response.text}")
 
